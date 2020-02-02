@@ -1,0 +1,95 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="yuntiCoreSqlSessionReadWriteFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:ibatis/global-yunti-core-config.xml"></property>
+        <property name="dataSource" ref="yuntiDataSource"></property>
+    </bean>
+
+    <beans profile="dev">
+        <bean id="yuntiDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="${datasource.yunti.jdbc.url}"/>
+            <property name="username" value="${datasource.yunti.jdbc.username}"/>
+            <property name="password" value="${datasource.yunti.jdbc.password}"/>
+            <property name="maxTotal" value="${datasource.yunti.jdbc.maxTotal}"/>
+            <property name="maxIdle" value="${datasource.yunti.jdbc.maxIdle}"/>
+            <property name="maxWaitMillis" value="${datasource.yunti.jdbc.maxWaitMillis}"/>
+            <property name="minIdle" value="${datasource.yunti.jdbc.minIdle}"/>
+            <property name="validationQuery" value="select 1"/>
+            <property name="validationQueryTimeout" value="1"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+            <property name="logAbandoned" value="true"/>
+            <property name="minEvictableIdleTimeMillis" value="60000"/>
+            <property name="removeAbandonedOnBorrow" value="true"/>
+            <property name="removeAbandonedOnMaintenance" value="true"/>
+            <property name="removeAbandonedTimeout" value="180"/>
+            <property name="testOnBorrow" value="true"></property>
+        </bean>
+    </beans>
+    <!--test in aliyun-->
+    <beans profile="test">
+        <bean id="yuntiDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="${datasource.yunti.jdbc.url}"/>
+            <property name="username" value="${datasource.yunti.jdbc.username}"/>
+            <property name="password" value="${datasource.yunti.jdbc.password}"/>
+            <property name="maxTotal" value="${datasource.yunti.jdbc.maxTotal}"/>
+            <property name="maxIdle" value="${datasource.yunti.jdbc.maxIdle}"/>
+            <property name="maxWaitMillis" value="${datasource.yunti.jdbc.maxWaitMillis}"/>
+            <property name="minIdle" value="${datasource.yunti.jdbc.minIdle}"/>
+            <property name="validationQuery" value="select 1"/>
+            <property name="validationQueryTimeout" value="1"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+            <property name="logAbandoned" value="true"/>
+            <property name="minEvictableIdleTimeMillis" value="60000"/>
+            <property name="removeAbandonedOnBorrow" value="true"/>
+            <property name="removeAbandonedOnMaintenance" value="true"/>
+            <property name="removeAbandonedTimeout" value="180"/>
+            <property name="testOnBorrow" value="true"></property>
+        </bean>
+    </beans>
+
+
+    <beans profile="product,prod">
+        <bean id="yuntiDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="${datasource.yunti.jdbc.url}"/>
+            <property name="username" value="${datasource.yunti.jdbc.username}"/>
+            <property name="password" value="#{yuntiPasswordProvider.getPassword()}"/>
+            <property name="maxTotal" value="${datasource.yunti.jdbc.maxTotal}"/>
+            <property name="maxIdle" value="${datasource.yunti.jdbc.maxIdle}"/>
+            <property name="maxWaitMillis" value="${datasource.yunti.jdbc.maxWaitMillis}"/>
+            <property name="minIdle" value="${datasource.yunti.jdbc.minIdle}"/>
+            <property name="validationQuery" value="select 1"/>
+            <property name="validationQueryTimeout" value="1"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+            <property name="logAbandoned" value="true"/>
+            <property name="minEvictableIdleTimeMillis" value="60000"/>
+            <property name="removeAbandonedOnBorrow" value="true"/>
+            <property name="removeAbandonedOnMaintenance" value="true"/>
+            <property name="removeAbandonedTimeout" value="180"/>
+            <property name="testOnBorrow" value="true"></property>
+        </bean>
+
+        <bean id="normalPasswordProvider" class="com.mokous.db.utils.PasswordProvider">
+            <property name="appId" value="${password.provider.appid}"></property>
+            <property name="folder" value="${password.provider.folder}"></property>
+            <property name="key" value="${password.provider.key}"></property>
+            <property name="safe" value="${password.provider.safe}"></property>
+            <property name="url" value="${password.provider.url}"></property>
+        </bean>
+
+        <bean id="yuntiPasswordProvider" class="com.mokous.yunti.utils.YuntiPasswordProvider">
+            <property name="passwordProvider" ref="normalPasswordProvider"></property>
+            <property name="name" value="${datasource.yunti.jdbc.aliasName}"></property>
+        </bean>
+    </beans>
+
+</beans>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T_YUNTIREPORTSQLEXPRESSION">
+	<resultMap type="com.mokous.yunti.domain.YuntiReportSqlExpression" id="yuntiReportSqlExpression">
+		<result column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="expression_sql" property="expressionSql" jdbcType="VARCHAR"/>
+		<result column="db_connect_id" property="dbConnectId" jdbcType="INTEGER"/>
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<insert id="insertYuntiReportSqlExpression" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{expressionSql}, #{dbConnectId}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertYuntiReportSqlExpressionBatch" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.expressionSql}, #{item.dbConnectId}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportSqlExpression" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT IGNORE INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{expressionSql}, #{dbConnectId}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportSqlExpressionBatch" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT IGNORE INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.expressionSql}, #{item.dbConnectId}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrUpdateYuntiReportSqlExpression" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{expressionSql}, #{dbConnectId}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrUpdateYuntiReportSqlExpressionBatch" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		INSERT INTO `t_yunti_report_sql_expression`
+		(`id`, `name`, `expression_sql`, `db_connect_id`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.expressionSql}, #{item.dbConnectId}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<update id="updateYuntiReportSqlExpressionDelFlag" parameterType="com.mokous.yunti.domain.YuntiReportSqlExpression">
+		<![CDATA[
+			UPDATE `t_yunti_report_sql_expression` SET `del_flag` = #{delFlag}		WHERE `id`  =  #{id}
+		]]>
+	</update>
+
+	<select id="queryYuntiReportSqlExpressionById" parameterType="java.lang.Integer" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		WHERE `id`  =  #{id}
+	</select>
+
+	<select id="queryYuntiReportSqlExpressionListByIds" parameterType="java.util.Map" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		<foreach collection="ids" item="item" index="index" close=")" separator="." open=" WHERE `id` in (">
+			{item}
+		</foreach>
+	</select>
+
+	<select id="queryYuntiReportSqlExpressionListByStartId" parameterType="java.util.Map" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		WHERE `id`  >  #{startId}
+	</select>
+
+	<select id="queryYuntiReportSqlExpressionListByStartIdFilter" parameterType="java.util.Map" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		WHERE `id`  >  #{startId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  ASC 
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportSqlExpressionListByEndIdFilter" parameterType="java.util.Map" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		WHERE `id`  &lt;  #{endId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  DESC
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportSqlExpressionListByFilter" parameterType="java.util.Map" resultMap="yuntiReportSqlExpression">
+		SELECT *  FROM `t_yunti_report_sql_expression` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+		ORDER BY `${orderColumn}` ${orderColumnSort} LIMIT #{start}, #{size};
+	</select>
+
+	<select id="countYuntiReportSqlExpressionByFilter" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*)  FROM `t_yunti_report_sql_expression` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

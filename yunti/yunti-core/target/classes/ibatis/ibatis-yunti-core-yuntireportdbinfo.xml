@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T_YUNTIREPORTDBINFO">
+	<resultMap type="com.mokous.yunti.domain.YuntiReportDbInfo" id="yuntiReportDbInfo">
+		<result column="id" property="id" jdbcType="BIGINT"/>
+		<result column="db_connect_id" property="dbConnectId" jdbcType="VARCHAR"/>
+		<result column="db_name" property="dbName" jdbcType="VARCHAR"/>
+		<result column="db_info" property="dbInfo" jdbcType="VARCHAR"/>
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<insert id="insertYuntiReportDbInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{dbConnectId}, #{dbName}, #{dbInfo}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertYuntiReportDbInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.dbConnectId}, #{item.dbName}, #{item.dbInfo}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportDbInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT IGNORE INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{dbConnectId}, #{dbName}, #{dbInfo}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportDbInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT IGNORE INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.dbConnectId}, #{item.dbName}, #{item.dbInfo}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrUpdateYuntiReportDbInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{dbConnectId}, #{dbName}, #{dbInfo}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrUpdateYuntiReportDbInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		INSERT INTO `t_yunti_report_db_info`
+		(`id`, `db_connect_id`, `db_name`, `db_info`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.dbConnectId}, #{item.dbName}, #{item.dbInfo}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<update id="updateYuntiReportDbInfoDelFlag" parameterType="com.mokous.yunti.domain.YuntiReportDbInfo">
+		<![CDATA[
+			UPDATE `t_yunti_report_db_info` SET `del_flag` = #{delFlag}		WHERE `id`  =  #{id}
+		]]>
+	</update>
+
+	<select id="queryYuntiReportDbInfoById" parameterType="java.lang.Integer" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		WHERE `id`  =  #{id}
+	</select>
+
+	<select id="queryYuntiReportDbInfoListByIds" parameterType="java.util.Map" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		<foreach collection="ids" item="item" index="index" close=")" separator="." open=" WHERE `id` in (">
+			{item}
+		</foreach>
+	</select>
+
+	<select id="queryYuntiReportDbInfoListByStartId" parameterType="java.util.Map" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		WHERE `id`  >  #{startId}
+	</select>
+
+	<select id="queryYuntiReportDbInfoListByStartIdFilter" parameterType="java.util.Map" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		WHERE `id`  >  #{startId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  ASC 
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportDbInfoListByEndIdFilter" parameterType="java.util.Map" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		WHERE `id`  &lt;  #{endId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  DESC
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportDbInfoListByFilter" parameterType="java.util.Map" resultMap="yuntiReportDbInfo">
+		SELECT *  FROM `t_yunti_report_db_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+		ORDER BY `${orderColumn}` ${orderColumnSort} LIMIT #{start}, #{size};
+	</select>
+
+	<select id="countYuntiReportDbInfoByFilter" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*)  FROM `t_yunti_report_db_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

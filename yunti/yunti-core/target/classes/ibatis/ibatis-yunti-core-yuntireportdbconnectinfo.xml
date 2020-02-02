@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T_YUNTIREPORTDBCONNECTINFO">
+	<resultMap type="com.mokous.yunti.domain.YuntiReportDbConnectInfo" id="yuntiReportDbConnectInfo">
+		<result column="id" property="id" jdbcType="BIGINT"/>
+		<result column="driver_class" property="driverClass" jdbcType="VARCHAR"/>
+		<result column="jdbc_url" property="jdbcUrl" jdbcType="VARCHAR"/>
+		<result column="db_id" property="dbId" jdbcType="INTEGER"/>
+		<result column="juser" property="juser" jdbcType="VARCHAR"/>
+		<result column="jpassword_type" property="jpasswordType" jdbcType="VARCHAR"/>
+		<result column="jpassword_value" property="jpasswordValue" jdbcType="VARCHAR"/>
+		<result column="filters" property="filters" jdbcType="VARCHAR"/>
+		<result column="max_active" property="maxActive" jdbcType="BIGINT"/>
+		<result column="initial_size" property="initialSize" jdbcType="BIGINT"/>
+		<result column="min_idle" property="minIdle" jdbcType="BIGINT"/>
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<insert id="insertYuntiReportDbConnectInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{driverClass}, #{jdbcUrl}, #{dbId}, #{juser}, #{jpasswordType}, #{jpasswordValue}, #{filters}, #{maxActive}, 
+		#{initialSize}, #{minIdle}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertYuntiReportDbConnectInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.driverClass}, #{item.jdbcUrl}, #{item.dbId}, #{item.juser}, #{item.jpasswordType}, #{item.jpasswordValue}, #{item.filters}, #{item.maxActive}, 
+		#{item.initialSize}, #{item.minIdle}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportDbConnectInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT IGNORE INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{driverClass}, #{jdbcUrl}, #{dbId}, #{juser}, #{jpasswordType}, #{jpasswordValue}, #{filters}, #{maxActive}, 
+		#{initialSize}, #{minIdle}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrIgnoreYuntiReportDbConnectInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT IGNORE INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.driverClass}, #{item.jdbcUrl}, #{item.dbId}, #{item.juser}, #{item.jpasswordType}, #{item.jpasswordValue}, #{item.filters}, #{item.maxActive}, 
+		#{item.initialSize}, #{item.minIdle}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrUpdateYuntiReportDbConnectInfo" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{driverClass}, #{jdbcUrl}, #{dbId}, #{juser}, #{jpasswordType}, #{jpasswordValue}, #{filters}, #{maxActive}, 
+		#{initialSize}, #{minIdle}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrUpdateYuntiReportDbConnectInfoBatch" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		INSERT INTO `t_yunti_report_db_connect_info`
+		(`id`, `driver_class`, `jdbc_url`, `db_id`, `juser`, `jpassword_type`, `jpassword_value`, `filters`, `max_active`, 
+		`initial_size`, `min_idle`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.driverClass}, #{item.jdbcUrl}, #{item.dbId}, #{item.juser}, #{item.jpasswordType}, #{item.jpasswordValue}, #{item.filters}, #{item.maxActive}, 
+		#{item.initialSize}, #{item.minIdle}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<update id="updateYuntiReportDbConnectInfoDelFlag" parameterType="com.mokous.yunti.domain.YuntiReportDbConnectInfo">
+		<![CDATA[
+			UPDATE `t_yunti_report_db_connect_info` SET `del_flag` = #{delFlag}		WHERE `id`  =  #{id}
+		]]>
+	</update>
+
+	<select id="queryYuntiReportDbConnectInfoById" parameterType="java.lang.Integer" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		WHERE `id`  =  #{id}
+	</select>
+
+	<select id="queryYuntiReportDbConnectInfoListByIds" parameterType="java.util.Map" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		<foreach collection="ids" item="item" index="index" close=")" separator="." open=" WHERE `id` in (">
+			{item}
+		</foreach>
+	</select>
+
+	<select id="queryYuntiReportDbConnectInfoListByStartId" parameterType="java.util.Map" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		WHERE `id`  >  #{startId}
+	</select>
+
+	<select id="queryYuntiReportDbConnectInfoListByStartIdFilter" parameterType="java.util.Map" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		WHERE `id`  >  #{startId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  ASC 
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportDbConnectInfoListByEndIdFilter" parameterType="java.util.Map" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		WHERE `id`  &lt;  #{endId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  DESC
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiReportDbConnectInfoListByFilter" parameterType="java.util.Map" resultMap="yuntiReportDbConnectInfo">
+		SELECT *  FROM `t_yunti_report_db_connect_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+		ORDER BY `${orderColumn}` ${orderColumnSort} LIMIT #{start}, #{size};
+	</select>
+
+	<select id="countYuntiReportDbConnectInfoByFilter" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*)  FROM `t_yunti_report_db_connect_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

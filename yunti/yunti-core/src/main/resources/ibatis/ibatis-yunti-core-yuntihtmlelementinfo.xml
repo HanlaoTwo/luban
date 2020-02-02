@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="T_YUNTIHTMLELEMENTINFO">
+	<resultMap type="com.mokous.yunti.domain.YuntiHtmlElementInfo" id="yuntiHtmlElementInfo">
+		<result column="id" property="id" jdbcType="BIGINT"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<insert id="insertYuntiHtmlElementInfo" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{type}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertYuntiHtmlElementInfoBatch" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.type}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrIgnoreYuntiHtmlElementInfo" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT IGNORE INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{type}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrIgnoreYuntiHtmlElementInfoBatch" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT IGNORE INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.type}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<insert id="insertOrUpdateYuntiHtmlElementInfo" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES (null, #{name}, #{type}, #{delFlag}, now(), now())
+	</insert>
+	<insert id="insertOrUpdateYuntiHtmlElementInfoBatch" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		INSERT INTO `t_yunti_html_element_info`
+		(`id`, `name`, `type`, `del_flag`, `update_time`, `create_time`)
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(null, #{item.name}, #{item.type}, #{item.delFlag}, now(), now())
+		</foreach>
+	</insert>
+	<update id="updateYuntiHtmlElementInfoDelFlag" parameterType="com.mokous.yunti.domain.YuntiHtmlElementInfo">
+		<![CDATA[
+			UPDATE `t_yunti_html_element_info` SET `del_flag` = #{delFlag}		WHERE `id`  =  #{id}
+		]]>
+	</update>
+
+	<select id="queryYuntiHtmlElementInfoById" parameterType="java.lang.Integer" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		WHERE `id`  =  #{id}
+	</select>
+
+	<select id="queryYuntiHtmlElementInfoListByIds" parameterType="java.util.Map" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		<foreach collection="ids" item="item" index="index" close=")" separator="." open=" WHERE `id` in (">
+			{item}
+		</foreach>
+	</select>
+
+	<select id="queryYuntiHtmlElementInfoListByStartId" parameterType="java.util.Map" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		WHERE `id`  >  #{startId}
+	</select>
+
+	<select id="queryYuntiHtmlElementInfoListByStartIdFilter" parameterType="java.util.Map" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		WHERE `id`  >  #{startId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  ASC 
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiHtmlElementInfoListByEndIdFilter" parameterType="java.util.Map" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		WHERE `id`  &lt;  #{endId}
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		 ORDER BY `id`  DESC
+		LIMIT #{size}
+	</select>
+
+	<select id="queryYuntiHtmlElementInfoListByFilter" parameterType="java.util.Map" resultMap="yuntiHtmlElementInfo">
+		SELECT *  FROM `t_yunti_html_element_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+		ORDER BY `${orderColumn}` ${orderColumnSort} LIMIT #{start}, #{size};
+	</select>
+
+	<select id="countYuntiHtmlElementInfoByFilter" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT count(*)  FROM `t_yunti_html_element_info` 
+		<trim prefix=" WHERE " prefixOverrides ='AND|OR'>
+			<if test="delFlag != null">
+				 AND `del_flag` = #{delFlag}
+			</if>
+			<if test="id != null">
+				 AND `id` = #{id}
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

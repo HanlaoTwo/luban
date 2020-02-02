@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<mappers>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntihtmlelementinfo.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportdbconnectinfo.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportdbconnectpasswordprovider.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportdbinfo.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportsqlexpression.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportsqlexpressionparameter.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireportsqlexpressionresult.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireporttablecolumninfo.xml"/>
+		<mapper resource="ibatis/ibatis-yunti-core-yuntireporttableinfo.xml"/>
+	</mappers>
+</configuration>
